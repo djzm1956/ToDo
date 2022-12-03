@@ -1,0 +1,31 @@
+{% extends 'toDo/base.html' %}
+{% load static %}
+
+{% block title %}
+    Add
+{% endblock %}
+
+{% block body %}
+
+    <div class="container">
+        <div class="row justify-content-md-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">
+                        New Task
+                    </div>
+                    <div class="card-body">
+                        <h2>Add a new task</h2>
+                            <form action="{% url 'add' %}" method="post">
+                                {% csrf_token %}
+                                {{ form.as_div }}
+                                <button type="submit" class="btn btn-primary my-3" value="Save"><i class="fa-solid fa-floppy-disk"></i> Save</button>
+                        </form>
+                    </div>
+                </div>
+                    <a href="{% url 'index' %}" class="btn btn-warning my-2"><i class="fa-solid fa-eye"></i> View Tasks</a>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

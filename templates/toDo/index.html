@@ -1,0 +1,47 @@
+{% extends 'toDo/base.html' %}
+{% load static %}
+
+{% block title %}
+    Index
+{% endblock %}
+
+{% block body %}
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <a id="heading" href="{% url 'index' %}"><h1 class="text-center display-4">TODO-LIST</h1></a>
+    <form action="{% url 'search' %}" method="get">
+        <div class="input-group">
+            <input type="text" class="form-control rounded" placeholder="Search tasks" name="search">
+            <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i> Search</button>
+        </div>
+    </form>
+        {% for task in tasks %}
+            <div class="card my-2 shadow">
+                <div class="container">
+                    <div class="row py-3 px-2">
+                        <div class="col-md-8">
+                            <h3>{{ task.task }}</h3>
+                            <p><small>Created: {{ task.created_at }}</small></p>
+                            {% if task.created_at|date:"YmdHis" < task.updated_at|date:"YmdHis" %}
+                                <p><small>Edited: {{ task.updated_at }}</small></p>
+                            {% endif %}
+                        </div>
+                        <div class="col-md-4 text-md-end text-sm-start">
+                            <a href="{% url 'update' task.id %}" class="btn btn-outline-primary update-icon"><i class="fa-regular fa-pen-to-square"></i></a>
+                            <a href="{% url 'delete' task.id %}" method="post" class="btn btn-outline-danger delete-icon"><i class="fa-solid fa-xmark"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <p class="display-6"><strong>No items found with your search term, or there is no todo added yet.</strong></p>
+        {% endfor %}
+         <a href="{% url 'add'%}" class="btn btn-success my-2"><i class="fa-solid fa-plus"></i> Add a new task</a>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
